@@ -1,0 +1,18 @@
+{
+	"name": "percolate",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"devDependencies": {
+		"@types/node": "14.11.2",
+		"prettier": "2.1.2",
+		"typescript": "4.0.3"
+	},
+	"scripts": {
+		"build": "tsc",
+		"format": "prettier --write \"**/.*.{js,json,ts}\" \"**/*.{js,json,ts}\"",
+		"go": "node src/montecarlo.js",
+		"test": "node src/tests.js",
+		"usage": "sed -n '/\\/\\*\\*/,/\\*\\// p; /\\*\\//q' src/montecarlo.ts"
+	}
+}

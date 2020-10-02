@@ -1,0 +1,7 @@
+# See: https://editorconfig.org/
+
+root = true
+
+[**.{ts,json}]
+indent_size = 4
+indent_style = tab

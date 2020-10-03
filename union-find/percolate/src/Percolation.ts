@@ -8,6 +8,7 @@ export default class Percolation {
 	#bottom: number;
 	#cells: Array<boolean>;
 	#connections: UnionFind;
+	#full: UnionFind;
 	#open: number;
 	#size: number;
 	#top: number;
@@ -18,6 +19,7 @@ export default class Percolation {
 	constructor(size: number) {
 		this.#cells = new Array(size * size).fill(false);
 		this.#connections = new UnionFind(size * size + 2);
+		this.#full = new UnionFind(size * size + 1);
 		this.#open = 0;
 		this.#size = size;
 
@@ -44,6 +46,7 @@ export default class Percolation {
 
 		if (row === 0) {
 			this.#connections.union(index, this.#top);
+			this.#full.union(index, this.#top);
 		}
 
 		if (row === this.#size - 1) {
@@ -52,18 +55,22 @@ export default class Percolation {
 
 		if (row > 0 && this.isOpen(row - 1, column)) {
 			this.#connections.union(index, (row - 1) * this.#size + column);
+			this.#full.union(index, (row - 1) * this.#size + column);
 		}
 
 		if (row < this.#size - 1 && this.isOpen(row + 1, column)) {
 			this.#connections.union(index, (row + 1) * this.#size + column);
+			this.#full.union(index, (row + 1) * this.#size + column);
 		}
 
 		if (column > 0 && this.isOpen(row, column - 1)) {
 			this.#connections.union(index, row * this.#size + column - 1);
+			this.#full.union(index, row * this.#size + column - 1);
 		}
 
 		if (column < this.#size - 1 && this.isOpen(row, column + 1)) {
 			this.#connections.union(index, row * this.#size + column + 1);
+			this.#full.union(index, row * this.#size + column + 1);
 		}
 	}
 
@@ -81,7 +88,7 @@ export default class Percolation {
 		const index = row * this.#size + column;
 
 		return (
-			this.#connections.find(index) === this.#connections.find(this.#top)
+			this.#full.find(index) === this.#full.find(this.#top)
 		);
 	}
 

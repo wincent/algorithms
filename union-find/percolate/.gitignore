@@ -1,4 +1,6 @@
 *.js
 !.prettierrc.js
 node_modules
+v8.log
+v8.log.processed.txt
 yarn-error.log

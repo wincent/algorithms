@@ -116,28 +116,23 @@ export default class Percolation {
 	}
 
 	toString() {
-		const separator = '---'.repeat(this._size) + '\n';
-
-		let grid = '';
+		let grid = '┏' + '━'.repeat(this._size * 2) + '┓\n';
 
 		for (let row = 0; row < this._size; row++) {
-			grid += separator;
+			grid += '┃';
+
 			for (let column = 0; column < this._size; column++) {
-				let char;
-
 				if (this.isFull(row, column)) {
-					char = FULL;
+					grid += FULL;
 				} else if (this.isOpen(row, column)) {
-					char = EMPTY;
+					grid += EMPTY;
 				} else {
-					char = BLOCKED;
+					grid += BLOCKED;
 				}
-
-				grid += `|${char}`;
 			}
-			grid += '|\n';
+			grid += '┃\n';
 		}
-		grid += separator;
+		grid += '┗' + '━'.repeat(this._size * 2) + '┛\n';
 
 		return grid;
 	}

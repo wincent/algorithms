@@ -5,11 +5,11 @@ const EMPTY = '  ';
 const FULL = '💧';
 
 export default class Percolation {
-	#bottom: number;
 	#cells: Array<boolean>;
 	#connections: UnionFind;
-	#full: UnionFind;
+	#lowest: Map<number, number>;
 	#open: number;
+	#percolates: boolean;
 	#size: number;
 	#top: number;
 
@@ -18,15 +18,15 @@ export default class Percolation {
 	 */
 	constructor(size: number) {
 		this.#cells = new Array(size * size).fill(false);
-		this.#connections = new UnionFind(size * size + 2);
-		this.#full = new UnionFind(size * size + 1);
+		this.#connections = new UnionFind(size * size + 1);
+		this.#lowest = new Map();
 		this.#open = 0;
+		this.#percolates = false;
 		this.#size = size;
 
-		// Additional virtual sites for linking to at top and bottom.
+		// Additional virtual site for linking to at top.
 
-		this.#bottom = this.#connections.size - 1;
-		this.#top = this.#connections.size - 2;
+		this.#top = this.#connections.size - 1;
 	}
 
 	/**
@@ -46,31 +46,40 @@ export default class Percolation {
 
 		if (row === 0) {
 			this.#connections.union(index, this.#top);
-			this.#full.union(index, this.#top);
-		}
-
-		if (row === this.#size - 1) {
-			this.#connections.union(index, this.#bottom);
 		}
 
 		if (row > 0 && this.isOpen(row - 1, column)) {
 			this.#connections.union(index, (row - 1) * this.#size + column);
-			this.#full.union(index, (row - 1) * this.#size + column);
 		}
 
 		if (row < this.#size - 1 && this.isOpen(row + 1, column)) {
 			this.#connections.union(index, (row + 1) * this.#size + column);
-			this.#full.union(index, (row + 1) * this.#size + column);
 		}
 
 		if (column > 0 && this.isOpen(row, column - 1)) {
 			this.#connections.union(index, row * this.#size + column - 1);
-			this.#full.union(index, row * this.#size + column - 1);
 		}
 
 		if (column < this.#size - 1 && this.isOpen(row, column + 1)) {
 			this.#connections.union(index, row * this.#size + column + 1);
-			this.#full.union(index, row * this.#size + column + 1);
+		}
+
+		// Detect percolation.
+		const leader = this.#connections.find(index);
+
+		let lowest = this.#lowest.get(leader);
+
+		if (lowest === undefined || index > lowest) {
+			this.#lowest.set(leader, index);
+
+			lowest = index;
+		}
+
+		if (
+			Math.floor(lowest / this.#size) === this.#size - 1 &&
+			this.isFull(Math.floor(lowest / this.#size), lowest % this.#size)
+		) {
+			this.#percolates = true;
 		}
 	}
 
@@ -88,7 +97,7 @@ export default class Percolation {
 		const index = row * this.#size + column;
 
 		return (
-			this.#full.find(index) === this.#full.find(this.#top)
+			this.#connections.find(index) === this.#connections.find(this.#top)
 		);
 	}
 
@@ -103,10 +112,7 @@ export default class Percolation {
 	 * Does the system percolate?
 	 */
 	percolates(): boolean {
-		return (
-			this.#connections.find(this.#top) ===
-			this.#connections.find(this.#bottom)
-		);
+		return this.#percolates;
 	}
 
 	toString() {

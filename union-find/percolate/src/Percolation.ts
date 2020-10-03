@@ -17,7 +17,7 @@ export default class Percolation {
 	 * Creates n-by-n grid, with all sites initially blocked.
 	 */
 	constructor(size: number) {
-		this._cells = new Array(size * size).fill(false);
+		this._cells = new Array(size * size);
 		this._connections = new UnionFind(size * size + 1);
 		this._lowest = new Map();
 		this._open = 0;
@@ -87,7 +87,7 @@ export default class Percolation {
 	 * Is the site (row, column) open?
 	 */
 	isOpen(row: number, column: number) {
-		return this._cells[row * this._size + column];
+		return !!this._cells[row * this._size + column];
 	}
 
 	/**

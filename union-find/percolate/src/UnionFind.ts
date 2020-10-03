@@ -5,7 +5,7 @@ export default class UnionFind {
 
 	constructor(size: number) {
 		this._parents = [...Array(size).keys()];
-		this._rank = new Array(size).fill(0);
+		this._rank = new Array(size);
 		this.size = size;
 	}
 
@@ -15,7 +15,17 @@ export default class UnionFind {
 
 		if (a === b) {
 			return;
-		} else if (this._rank[a] < this._rank[b]) {
+		}
+
+		if (this._rank[a] === undefined) {
+			this._rank[a] = 0;
+		}
+
+		if (this._rank[b] === undefined) {
+			this._rank[b] = 0;
+		}
+
+		if (this._rank[a] < this._rank[b]) {
 			this._parents[a] = b;
 		} else if (this._rank[b] > this._rank[a]) {
 			this._parents[b] = a;

@@ -42,12 +42,14 @@ function shuffle(source: Array<unknown>) {
 	return output;
 }
 
+const indices = [...Array(SIZE * SIZE).keys()];
+
 let totalOpenCells = 0;
 
 let elapsed = 0;
 
 for (let i = 0; i < RUNS; i++) {
-	const randomIndices = shuffle([...Array(SIZE * SIZE).keys()]);
+	const randomIndices = shuffle(indices);
 
 	const start = performance.now();
 

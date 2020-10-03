@@ -1,11 +1,11 @@
 export default class UnionFind {
-	#parents: Array<number>;
-	#rank: Array<number>;
+	_parents: Array<number>;
+	_rank: Array<number>;
 	size: number;
 
 	constructor(size: number) {
-		this.#parents = [...Array(size).keys()];
-		this.#rank = new Array(size).fill(0);
+		this._parents = [...Array(size).keys()];
+		this._rank = new Array(size).fill(0);
 		this.size = size;
 	}
 
@@ -15,33 +15,33 @@ export default class UnionFind {
 
 		if (a === b) {
 			return;
-		} else if (this.#rank[a] < this.#rank[b]) {
-			this.#parents[a] = b;
-		} else if (this.#rank[b] > this.#rank[a]) {
-			this.#parents[b] = a;
+		} else if (this._rank[a] < this._rank[b]) {
+			this._parents[a] = b;
+		} else if (this._rank[b] > this._rank[a]) {
+			this._parents[b] = a;
 		} else {
-			this.#parents[a] = b;
-			this.#rank[b]++;
+			this._parents[a] = b;
+			this._rank[b]++;
 		}
 	}
 
 	find(index: number) {
-		let parent = this.#parents[index];
+		let parent = this._parents[index];
 
 		if (parent === index) {
 			return index;
 		}
 
 		// Walk up to the leader.
-		while (this.#parents[parent] !== parent) {
-			parent = this.#parents[parent];
+		while (this._parents[parent] !== parent) {
+			parent = this._parents[parent];
 		}
 
 		// Compress path.
 		let current = index;
 		while (current !== parent) {
-			const next = this.#parents[current];
-			this.#parents[current] = parent;
+			const next = this._parents[current];
+			this._parents[current] = parent;
 			current = next;
 		}
 

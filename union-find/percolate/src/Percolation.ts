@@ -4,8 +4,9 @@ const BLOCKED = '🛑';
 const EMPTY = '  ';
 const FULL = '💧';
 
+let cells: Array<boolean>;
+
 export default class Percolation {
-	_cells: Array<boolean>;
 	_connections: UnionFind;
 	_lowest: Map<number, number>;
 	_open: number;
@@ -17,7 +18,14 @@ export default class Percolation {
 	 * Creates n-by-n grid, with all sites initially blocked.
 	 */
 	constructor(size: number) {
-		this._cells = new Array(size * size);
+		if (!cells) {
+			cells = new Array(size * size);
+		}
+
+		for (let i = 0; i < size * size; i++) {
+			cells[i] = false;
+		}
+
 		this._connections = new UnionFind(size * size + 1);
 		this._lowest = new Map();
 		this._open = 0;
@@ -26,7 +34,7 @@ export default class Percolation {
 
 		// Additional virtual site for linking to at top.
 
-		this._top = this._connections.size - 1;
+		this._top = size * size;
 	}
 
 	/**
@@ -35,11 +43,11 @@ export default class Percolation {
 	open(row: number, column: number) {
 		const index = row * this._size + column;
 
-		if (this._cells[index]) {
+		if (cells[index]) {
 			return true;
 		}
 
-		this._cells[index] = true;
+		cells[index] = true;
 		this._open++;
 
 		// Link with open neighbors.
@@ -87,7 +95,7 @@ export default class Percolation {
 	 * Is the site (row, column) open?
 	 */
 	isOpen(row: number, column: number) {
-		return !!this._cells[row * this._size + column];
+		return !!cells[row * this._size + column];
 	}
 
 	/**

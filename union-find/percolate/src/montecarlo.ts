@@ -30,7 +30,7 @@ const VERBOSE = Number(process.env.VERBOSE || 1);
  */
 function shuffle(array: Array<unknown>) {
 	for (let i = 0; i < array.length; i++) {
-		const j = ((Math.random() * i) + 0.5) << 0;
+		const j = (Math.random() * i + 0.5) << 0;
 		if (j !== i) {
 			array[i] = array[j];
 		}

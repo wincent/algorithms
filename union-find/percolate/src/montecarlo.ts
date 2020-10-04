@@ -28,18 +28,14 @@ const VERBOSE = Number(process.env.VERBOSE || 1);
  *
  * See: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
  */
-function shuffle(source: Array<unknown>) {
-	const output = new Array(source.length);
-
-	for (let i = 0; i < source.length; i++) {
+function shuffle(array: Array<unknown>) {
+	for (let i = 0; i < array.length; i++) {
 		const j = Math.round(Math.random() * i);
 		if (j !== i) {
-			output[i] = output[j];
+			array[i] = array[j];
 		}
-		output[j] = source[i];
+		array[j] = i;
 	}
-
-	return output;
 }
 
 const indices = [...Array(SIZE * SIZE).keys()];
@@ -49,15 +45,15 @@ let totalOpenCells = 0;
 let elapsed = 0;
 
 for (let i = 0; i < RUNS; i++) {
-	const randomIndices = shuffle(indices);
+	shuffle(indices);
 
 	const start = performance.now();
 
 	const percolation = new Percolation(SIZE);
 
-	for (let j = 0; j < randomIndices.length; j++) {
-		const column = randomIndices[j] % SIZE;
-		const row = Math.floor(randomIndices[j] / SIZE);
+	for (let j = 0; j < indices.length; j++) {
+		const column = indices[j] % SIZE;
+		const row = Math.floor(indices[j] / SIZE);
 
 		percolation.open(row, column);
 

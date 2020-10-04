@@ -76,8 +76,8 @@ export default class Percolation {
 		}
 
 		if (
-			Math.floor(lowest / this._size) === this._size - 1 &&
-			this.isFull(Math.floor(lowest / this._size), lowest % this._size)
+			~~(lowest / this._size) === this._size - 1 &&
+			this.isFull(~~(lowest / this._size), lowest % this._size)
 		) {
 			this._percolates = true;
 		}

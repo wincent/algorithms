@@ -30,7 +30,7 @@ const VERBOSE = Number(process.env.VERBOSE || 1);
  */
 function shuffle(array: Array<unknown>) {
 	for (let i = 0; i < array.length; i++) {
-		const j = (Math.random() * i + 0.5) << 0;
+		const j = Math.round(Math.random() * i);
 		if (j !== i) {
 			array[i] = array[j];
 		}
@@ -53,7 +53,7 @@ for (let i = 0; i < RUNS; i++) {
 
 	for (let j = 0; j < indices.length; j++) {
 		const column = indices[j] % SIZE;
-		const row = ~~(indices[j] / SIZE);
+		const row = Math.floor(indices[j] / SIZE);
 
 		percolation.open(row, column);
 

@@ -10,7 +10,7 @@
 	},
 	"scripts": {
 		"build": "tsc",
-		"format": "prettier --write \"**/.*.{js,json,ts}\" \"**/*.{js,json,ts}\"",
+		"format": "prettier --write \"**/.*.{js,json,ts}\" \"**/*.{js,json,md,ts}\"",
 		"go": "make && node src/montecarlo.js",
 		"profile": "make && VERBOSE=0 node --prof --no-logfile-per-isolate src/montecarlo.js 1000 1 && node --prof-process v8.log > v8.log.processed.txt && $EDITOR v8.log.processed.txt",
 		"test": "make && node src/tests.js",

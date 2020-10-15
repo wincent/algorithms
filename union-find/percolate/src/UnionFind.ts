@@ -27,7 +27,7 @@ export default class UnionFind {
 
 		if (this._rank[a] < this._rank[b]) {
 			this._parents[a] = b;
-		} else if (this._rank[b] > this._rank[a]) {
+		} else if (this._rank[a] > this._rank[b]) {
 			this._parents[b] = a;
 		} else {
 			this._parents[a] = b;

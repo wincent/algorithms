@@ -47,3 +47,30 @@ permute([0, 1, 2, 3, 4, 5, 6, 7]).forEach((rows) => {
 
 	assert.equal(p.percolates(), true);
 });
+
+// The diagram from the README.
+
+const p = new Percolation(6);
+
+// Open up area "A".
+
+p.open(0, 0);
+p.open(0, 1);
+p.open(0, 2);
+p.open(1, 0);
+p.open(1, 1);
+p.open(2, 0);
+
+// Open up area "C".
+
+p.open(4, 0);
+p.open(4, 1);
+p.open(5, 0);
+p.open(5, 1);
+p.open(5, 2);
+
+assert.equal(p.percolates(), false);
+
+p.open(3, 0);
+
+assert.equal(p.percolates(), true);

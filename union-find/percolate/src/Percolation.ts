@@ -30,6 +30,18 @@ export default class Percolation {
 	}
 
 	/**
+	 * Convenience function that connects two sites and returns the
+	 * lowest site in the neighbor's former leader.
+	 */
+	_connect(index: number, neighbor: number): number {
+		const leader = this._connections.find(neighbor);
+
+		this._connections.union(index, neighbor);
+
+		return this._lowest.get(leader) || 0;
+	}
+
+	/**
 	 * Opens the site (row, column) if it is not open already.
 	 */
 	open(row: number, column: number) {
@@ -42,38 +54,49 @@ export default class Percolation {
 		this._cells[index] = true;
 		this._open++;
 
+		// Keep track of lowest index seen so far.
+
+		let lowest = index;
+
 		// Link with open neighbors.
 
 		if (row === 0) {
-			this._connections.union(index, this._top);
+			lowest = Math.max(lowest, this._connect(index, this._top));
 		}
 
 		if (row > 0 && this.isOpen(row - 1, column)) {
-			this._connections.union(index, (row - 1) * this._size + column);
+			lowest = Math.max(
+				lowest,
+				this._connect(index, (row - 1) * this._size + column)
+			);
 		}
 
 		if (row < this._size - 1 && this.isOpen(row + 1, column)) {
-			this._connections.union(index, (row + 1) * this._size + column);
+			lowest = Math.max(
+				lowest,
+				this._connect(index, (row + 1) * this._size + column)
+			);
 		}
 
 		if (column > 0 && this.isOpen(row, column - 1)) {
-			this._connections.union(index, row * this._size + column - 1);
+			lowest = Math.max(
+				lowest,
+				this._connect(index, row * this._size + column - 1)
+			);
 		}
 
 		if (column < this._size - 1 && this.isOpen(row, column + 1)) {
-			this._connections.union(index, row * this._size + column + 1);
+			lowest = Math.max(
+				lowest,
+				this._connect(index, row * this._size + column + 1)
+			);
 		}
 
 		// Detect percolation.
+
 		const leader = this._connections.find(index);
 
-		let lowest = this._lowest.get(leader);
-
-		if (lowest === undefined || index > lowest) {
-			this._lowest.set(leader, index);
-
-			lowest = index;
-		}
+		this._lowest.set(leader, lowest);
 
 		if (
 			Math.floor(lowest / this._size) === this._size - 1 &&

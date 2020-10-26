@@ -1,0 +1,13 @@
+{
+	"name": "percolate",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"build": "true",
+		"format": "cd .. && yarn format",
+		"go": "node src/main.js",
+		"profile": "node --prof --no-logfile-per-isolate src/main.js && node --prof-process v8.log > v8.log.processed.txt && $EDITOR v8.log.processed.txt",
+		"test": "node src/tests.js"
+	}
+}

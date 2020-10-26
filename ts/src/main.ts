@@ -1,6 +1,7 @@
 import assert from 'assert';
 import fs from 'fs';
 
+import BruteCollinearPoints from './BruteCollinearPoints';
 import FastCollinearPoints from './FastCollinearPoints';
 import Point from './Point';
 
@@ -14,7 +15,8 @@ async function main() {
 
 	const file = process.argv[2];
 
-	const contents = fs.readFileSync(file, 'utf8')
+	const contents = fs
+		.readFileSync(file, 'utf8')
 		.split(/\r\n|\n/)
 		.filter((line) => /\S/.test(line));
 
@@ -36,19 +38,20 @@ async function main() {
 		points.push(new Point(parseInt(match[1], 10), parseInt(match[2], 10)));
 	}
 
-	const collinear = new FastCollinearPoints(points);
+	const collinear = process.env.BRUTE
+		? new BruteCollinearPoints(points)
+		: new FastCollinearPoints(points);
 
 	for (const segment of collinear.segments()) {
-		console.log(segment.toString())
+		console.log(segment.toString());
 	}
 
 	// TODO: print out code that can be copy-pasted into browser console to draw
 	// a canvas.
 }
 
-main()
-	.catch((error) => {
-		console.log(`error: ${error}`);
+main().catch((error) => {
+	console.error(`error: ${error}`);
 
-		process.exit(1);
-	});
+	process.exit(1);
+});

@@ -14,18 +14,59 @@ export default class Point {
 		this._y = y;
 	}
 
+	get x() {
+		return this._x;
+	}
+
+	get y() {
+		return this._y;
+	}
+
 	compareTo(other: Point): Ordering {
-		// TODO: implement
-		return 0;
+		if (this._y < other.y) {
+			return -1;
+		} else if (this._y > other.y) {
+			return 1;
+		} else if (this._x < other.x) {
+			return -1;
+		} else if (this._x > other.x) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 	slope(other: Point): number {
-		// TODO: implement
-		return 0;
+		const x = other.x - this._x;
+		const y = other.y - this._y;
+
+		if (x === 0) {
+			if (y === 0) {
+				return -Infinity;
+			} else {
+				return Infinity;
+			}
+		} else if (y === 0) {
+			return 0;
+		} else {
+			return y / x;
+		}
 	}
 
 	slopeOrder() {
-		// TODO: implement
+		return (a: Point, b: Point): Ordering => {
+			const slopeToA = this.compareTo(a);
+
+			const slopeToB = this.compareTo(b);
+
+			if (slopeToA < slopeToB) {
+				return -1;
+			} else if (slopeToA > slopeToB) {
+				return 1;
+			} else {
+				return 0;
+			}
+		};
 	}
 
 	toString() {

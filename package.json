@@ -1,19 +1,21 @@
 {
-	"name": "percolate",
-	"version": "1.0.0",
-	"main": "index.js",
-	"license": "MIT",
+	"author": "Greg Hurrell <greg.hurrell@liferay.com>",
 	"devDependencies": {
 		"@types/node": "14.11.2",
 		"prettier": "2.1.2",
 		"typescript": "4.0.3"
 	},
+	"license": "MIT",
+	"main": "index.js",
+	"name": "algorithms",
+	"private": true,
+	"repository": "git@github.com:wincent/algorithms.git",
 	"scripts": {
-		"build": "tsc",
-		"format": "prettier --write \"**/.*.{js,json,ts}\" \"**/*.{js,json,ts}\"",
-		"go": "make && node src/montecarlo.js",
-		"profile": "make && VERBOSE=0 node --prof --no-logfile-per-isolate src/montecarlo.js 1000 1 && node --prof-process v8.log > v8.log.processed.txt && $EDITOR v8.log.processed.txt",
-		"test": "make && node src/tests.js",
-		"usage": "sed -n '/\\/\\*\\*/,/\\*\\// p; /\\*\\//q' src/montecarlo.ts"
-	}
+		"format": "prettier --write \"**/.*.{js,json,ts}\" \"**/*.{js,json,ts}\""
+	},
+	"version": "1.0.0",
+	"workspaces": [
+		"js",
+		"ts"
+	]
 }

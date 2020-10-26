@@ -1,2 +1,1 @@
-*.js
-!.prettierrc.js
+/ts/**/*.js

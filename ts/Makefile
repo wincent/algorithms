@@ -8,7 +8,7 @@ else
 	TSC := yarn tsc
 endif
 
-$(JS) &: $(TS) package.json tsconfig.json yarn.lock
+$(JS) &: $(TS) package.json tsconfig.json ../yarn.lock
 	$(TSC)
 
 clean :

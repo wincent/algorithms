@@ -36,6 +36,27 @@ export default class Point {
 		}
 	}
 
+	async draw(
+		canvas: (
+			callback: (context: CanvasRenderingContext2D) => void,
+			...args: Array<any>
+		) => Promise<void>
+	): Promise<void> {
+		await canvas(
+			async (context: CanvasRenderingContext2D, ...args: Array<any>) => {
+				const [x, y] = args;
+
+				const transformed = await (window as any).transform({x, y});
+
+				context.fillStyle = 'rgb(255, 0, 0)';
+
+				context.fillRect(transformed.x - 2, transformed.y - 2, 4, 4);
+			},
+			this._x,
+			this._y
+		);
+	}
+
 	slope(other: Point): number {
 		const x = other.x - this._x;
 		const y = other.y - this._y;

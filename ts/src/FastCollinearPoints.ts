@@ -56,48 +56,43 @@ export default class FastCollinearPoints {
 				}
 			});
 
-			let equal: Array<{point: Point; slope: number}> = [];
+			let start = 0;
+			let minimum = {point: p, slope: -Infinity};
+			let maximum = {point: p, slope: -Infinity};
+			let previous = slopes[start];
 
-			for (let j = 0; j < slopes.length; j++) {
+			for (let j = 1; j < slopes.length; j++) {
 				const current = slopes[j];
 
-				if (!equal.length) {
-					equal.push(current);
+				if (current.slope === previous.slope) {
+					if (current.point.compareTo(minimum.point) < 0) {
+						minimum = current;
+					}
 
-					continue;
-				} else if (equal[equal.length - 1].slope === current.slope) {
-					equal.push(current);
-
-					if (j !== slopes.length - 1) {
-						continue;
+					if (current.point.compareTo(maximum.point) > 0) {
+						maximum = current;
 					}
 				}
 
-				if (equal.length >= MINIMUM_SEGMENT_SIZE - 1) {
-					let minimum = {point: p, slope: -Infinity};
-					let maximum = {point: p, slope: -Infinity};
+				if (
+					j === slopes.length - 1 ||
+					current.slope !== previous.slope
+				) {
+					if (j - start >= MINIMUM_SEGMENT_SIZE - 1) {
+						const segment = new LineSegment(
+							minimum.point,
+							maximum.point
+						);
 
-					for (let k = 0; k < equal.length; k++) {
-						const {point} = equal[k];
-
-						if (point.compareTo(minimum.point) < 0) {
-							minimum = equal[k];
-						}
-
-						if (point.compareTo(maximum.point) > 0) {
-							maximum = equal[k];
-						}
+						segments.set(segment.toString(), segment);
 					}
 
-					const segment = new LineSegment(
-						minimum.point,
-						maximum.point
-					);
-
-					segments.set(segment.toString(), segment);
+					start = j;
+					minimum = {point: p, slope: -Infinity};
+					maximum = {point: p, slope: -Infinity};
 				}
 
-				equal = [current];
+				previous = current;
 			}
 		}
 

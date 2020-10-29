@@ -1,7 +1,5 @@
 import assert from 'assert';
 
-type Ordering = -1 | 0 | 1;
-
 export default class Point {
 	_y: number;
 	_x: number;
@@ -22,18 +20,14 @@ export default class Point {
 		return this._y;
 	}
 
-	compareTo(other: Point): Ordering {
+	compareTo(other: Point): number {
 		if (this._y < other.y) {
 			return -1;
 		} else if (this._y > other.y) {
 			return 1;
-		} else if (this._x < other.x) {
-			return -1;
-		} else if (this._x > other.x) {
-			return 1;
-		} else {
-			return 0;
 		}
+
+		return this._x - other.x;
 	}
 
 	async draw(
@@ -75,18 +69,12 @@ export default class Point {
 	}
 
 	slopeOrder() {
-		return (a: Point, b: Point): Ordering => {
+		return (a: Point, b: Point): number => {
 			const slopeToA = this.compareTo(a);
 
 			const slopeToB = this.compareTo(b);
 
-			if (slopeToA < slopeToB) {
-				return -1;
-			} else if (slopeToA > slopeToB) {
-				return 1;
-			} else {
-				return 0;
-			}
+			return slopeToA - slopeToB;
 		};
 	}
 

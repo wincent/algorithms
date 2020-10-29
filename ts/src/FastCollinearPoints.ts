@@ -46,15 +46,7 @@ export default class FastCollinearPoints {
 			// course instead of using the JS one; also, use the compareTo()
 			// function.
 
-			slopes.sort((a, b) => {
-				if (a.slope < b.slope) {
-					return -1;
-				} else if (a.slope > b.slope) {
-					return 1;
-				} else {
-					return 0;
-				}
-			});
+			slopes.sort((a, b) => a.slope - b.slope);
 
 			let equal: Array<{point: Point; slope: number}> = [];
 

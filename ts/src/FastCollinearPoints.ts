@@ -18,11 +18,11 @@ export default class FastCollinearPoints {
 	}
 
 	segments(): Array<LineSegment> {
-		const segments: Map<string, LineSegment> = new Map();
-
 		if (this._points.length < MINIMUM_SEGMENT_SIZE) {
 			return [];
 		}
+
+		const segments: Array<LineSegment> = [];
 
 		for (let i = 0; i < this._points.length; i++) {
 			const p = this._points[i];
@@ -41,10 +41,6 @@ export default class FastCollinearPoints {
 					slope: p.slope(q),
 				});
 			}
-
-			// TODO: write a sort API matching the one they describe in the
-			// course instead of using the JS one; also, use the compareTo()
-			// function.
 
 			slopes.sort((a, b) => a.slope - b.slope);
 
@@ -81,18 +77,17 @@ export default class FastCollinearPoints {
 						}
 					}
 
-					const segment = new LineSegment(
-						minimum.point,
-						maximum.point
-					);
-
-					segments.set(segment.toString(), segment);
+					if (p.compareTo(minimum.point) === 0) {
+						segments.push(
+							new LineSegment(minimum.point, maximum.point)
+						);
+					}
 				}
 
 				equal = [current];
 			}
 		}
 
-		return Array.from(segments.values());
+		return segments;
 	}
 }

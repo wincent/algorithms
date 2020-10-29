@@ -42,8 +42,6 @@ export default class FastCollinearPoints {
 				});
 			}
 
-			// TODO: benchmark the different versions of this
-
 			slopes.sort((a, b) => {
 				return a.slope - b.slope || a.point.compareTo(b.point);
 			});

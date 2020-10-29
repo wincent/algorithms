@@ -7,6 +7,7 @@
 		"build": "tsc",
 		"format": "cd .. && yarn format",
 		"go": "make && node src/main.js",
+		"go:visual": "make && node src/browser.js",
 		"profile": "make && VERBOSE=0 node --prof --no-logfile-per-isolate src/main.js && node --prof-process v8.log > v8.log.processed.txt && $EDITOR v8.log.processed.txt",
 		"test": "make && node src/tests.js"
 	},

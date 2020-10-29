@@ -1,0 +1,14 @@
+{
+	"author": "Greg Hurrell <greg.hurrell@liferay.com>",
+	"license": "MIT",
+	"name": "algorithms",
+	"private": true,
+	"repository": "git@github.com:wincent/algorithms.git",
+	"scripts": {
+		"format": "prettier --write \"**/*.md\""
+	},
+	"version": "1.0.0",
+	"devDependencies": {
+		"prettier": "2.1.2"
+	}
+}

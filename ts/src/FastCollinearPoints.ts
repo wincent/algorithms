@@ -42,49 +42,45 @@ export default class FastCollinearPoints {
 				});
 			}
 
-			slopes.sort((a, b) => a.slope - b.slope);
+			// TODO: benchmark the different versions of this
 
-			let equal: Array<{point: Point; slope: number}> = [];
+			slopes.sort((a, b) => {
+				return a.slope - b.slope || a.point.compareTo(b.point);
+			});
 
-			for (let j = 0; j < slopes.length; j++) {
+			let start = 0;
+			let previous = slopes[start];
+
+			for (let j = 1; j < slopes.length; j++) {
 				const current = slopes[j];
 
-				if (!equal.length) {
-					equal.push(current);
+				const minimum = slopes[start].point;
 
-					continue;
-				} else if (equal[equal.length - 1].slope === current.slope) {
-					equal.push(current);
+				if (current.slope !== previous.slope) {
+					const maximum = previous.point;
 
-					if (j !== slopes.length - 1) {
-						continue;
+					if (
+						j - start >= MINIMUM_SEGMENT_SIZE - 1 &&
+						p.compareTo(minimum) < 0
+					) {
+						segments.push(new LineSegment(p, maximum));
 					}
+
+					start = j;
+				} else if (j === slopes.length - 1) {
+					const maximum = current.point;
+
+					if (
+						j - start >= MINIMUM_SEGMENT_SIZE - 1 &&
+						p.compareTo(minimum) < 0
+					) {
+						segments.push(new LineSegment(p, maximum));
+					}
+
+					start = j;
 				}
 
-				if (equal.length >= MINIMUM_SEGMENT_SIZE - 1) {
-					let minimum = {point: p, slope: -Infinity};
-					let maximum = {point: p, slope: -Infinity};
-
-					for (let k = 0; k < equal.length; k++) {
-						const {point} = equal[k];
-
-						if (point.compareTo(minimum.point) < 0) {
-							minimum = equal[k];
-						}
-
-						if (point.compareTo(maximum.point) > 0) {
-							maximum = equal[k];
-						}
-					}
-
-					if (p.compareTo(minimum.point) === 0) {
-						segments.push(
-							new LineSegment(minimum.point, maximum.point)
-						);
-					}
-				}
-
-				equal = [current];
+				previous = current;
 			}
 		}
 

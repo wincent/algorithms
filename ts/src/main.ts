@@ -1,9 +1,8 @@
 import assert from 'assert';
 import fs from 'fs';
 
-import BruteCollinearPoints from './BruteCollinearPoints';
-import FastCollinearPoints from './FastCollinearPoints';
-import Point from './Point';
+import Board from './Board';
+import Solver from './Solver';
 
 async function main() {
 	assert(
@@ -11,43 +10,52 @@ async function main() {
 		'Expected exactly one argument (an input file)'
 	);
 
-	const points: Array<Point> = [];
-
 	const file = process.argv[2];
 
 	const contents = fs
 		.readFileSync(file, 'utf8')
+		.trim()
 		.split(/\r\n|\n/)
-		.filter((line) => /\S/.test(line));
+		.filter((line) => /\S/.test(line))
+		.map((line) => line.trim());
 
 	assert(contents.length, 'Expected a non-blank input file');
 
-	const count = parseInt(contents[0], 10);
+	const n = parseInt(contents[0], 10);
 
-	assert(!isNaN(count), 'Expected first line to be a count');
+	assert(!isNaN(n), 'Expected first line to be a grid size');
 
-	for (let i = 1; i <= count; i++) {
-		const line = contents[i];
+	assert(contents.length === n + 1, `Expected ${n} rows of input data`);
 
-		assert(line, `Expected ${count} x, y pairs`);
+	const tiles: Array<Array<number>> = Array.from({length: n}, () => []);
 
-		const match = line.match(/^\s*(\d+)\s*(\d+)\s*$/);
+	for (let i = 0; i < n; i++) {
+		const values = contents[i + 1].split(/\s+/);
 
-		assert(match, `Expected an x, y pair but got ${JSON.stringify(line)}`);
+		assert(values.length === n, `Expected row with ${n} items`);
 
-		points.push(new Point(parseInt(match[1], 10), parseInt(match[2], 10)));
+		for (let j = 0; j < n; j++) {
+			const value = parseInt(values[j], 10);
+
+			assert(!isNaN(value), 'Expected row value to be an number');
+
+			tiles[i][j] = value;
+		}
 	}
 
-	const collinear = process.env.BRUTE
-		? new BruteCollinearPoints(points)
-		: new FastCollinearPoints(points);
+	const initial = new Board(tiles);
 
-	for (const segment of collinear.segments()) {
-		console.log(segment.toString());
+	const solver = new Solver(initial);
+
+	if (solver.isSolvable()) {
+		console.log(`Minimum number of moves = ${solver.moves()}`);
+
+		for (const board of solver.solution()) {
+			console.log(board);
+		}
+	} else {
+		console.log('No solution possible');
 	}
-
-	// TODO: print out code that can be copy-pasted into browser console to draw
-	// a canvas.
 }
 
 main().catch((error) => {

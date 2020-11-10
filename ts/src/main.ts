@@ -50,8 +50,10 @@ async function main() {
 	if (solver.isSolvable()) {
 		console.log(`Minimum number of moves = ${solver.moves()}`);
 
-		for (const board of solver.solution()) {
-			console.log(board);
+		const solution = solver.solution();
+
+		for (const board of solution!) {
+			console.log(board.toString());
 		}
 	} else {
 		console.log('No solution possible');

@@ -1,6 +1,115 @@
 import assert from 'assert';
 
+import Board from './Board';
 import Heap from './Heap';
+
+// This is example from:
+//
+//      https://coursera.cs.princeton.edu/algs4/assignments/8puzzle/specification.php
+//
+let board = new Board([
+	[8, 1, 3],
+	[4, 0, 2],
+	[7, 6, 5],
+]);
+
+const goal = new Board([
+	[1, 2, 3],
+	[4, 5, 6],
+	[7, 8, 0],
+]);
+
+//
+// Test Board#equals().
+//
+
+assert(board.equals(board));
+assert(
+	board.equals(
+		new Board([
+			[8, 1, 3],
+			[4, 0, 2],
+			[7, 6, 5],
+		])
+	)
+);
+assert.equal(board.equals(goal), false);
+assert.equal(board.equals(1000), false);
+
+//
+// Test Board#hamming().
+//
+
+assert.equal(goal.hamming(), 0);
+
+assert.equal(board.hamming(), 5);
+
+//
+// Test Board#isGoal().
+//
+
+assert.equal(goal.isGoal(), true);
+assert.equal(board.isGoal(), false);
+
+//
+// Test Board#manhattan().
+//
+
+assert.equal(goal.manhattan(), 0);
+assert.equal(board.manhattan(), 10);
+
+//
+// Test Board#neighbors().
+//
+
+const neighbors = [
+	...new Board([
+		[1, 0, 3],
+		[4, 2, 5],
+		[7, 8, 6],
+	]).neighbors(),
+];
+
+assert.equal(neighbors.length, 3);
+
+assert.equal(
+	neighbors[0].equals(
+		new Board([
+			[1, 3, 0],
+			[4, 2, 5],
+			[7, 8, 6],
+		])
+	),
+	true
+);
+
+assert.equal(
+	neighbors[1].equals(
+		new Board([
+			[0, 1, 3],
+			[4, 2, 5],
+			[7, 8, 6],
+		])
+	),
+	true
+);
+
+assert.equal(
+	neighbors[2].equals(
+		new Board([
+			[1, 2, 3],
+			[4, 0, 5],
+			[7, 8, 6],
+		])
+	),
+	true
+);
+
+//
+// Test Board#toString().
+//
+
+assert.equal(goal.toString(), '3\n' + ' 1 2 3\n' + ' 4 5 6\n' + ' 7 8 0');
 
 //
 // Test min heap.

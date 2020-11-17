@@ -8,7 +8,14 @@
 		"build": "tsc",
 		"format": "cd .. && yarn format",
 		"go": "make && node src/main.js",
+		"go:kd": "make && env KD=1 node src/main.js",
 		"profile": "make && VERBOSE=0 node --prof --no-logfile-per-isolate src/main.js && node --prof-process v8.log > v8.log.processed.txt && $EDITOR v8.log.processed.txt",
 		"test": "make && node src/tests.js"
+	},
+	"dependencies": {
+		"puppeteer": "5.5.0"
+	},
+	"devDependencies": {
+		"@types/puppeteer": "5.4.0"
 	}
 }

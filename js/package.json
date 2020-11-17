@@ -8,6 +8,7 @@
 		"build": "true",
 		"format": "cd .. && yarn format",
 		"go": "node src/main.js",
+		"go:kd": "env KD=1 node src/main.js",
 		"profile": "VERBOSE=0 node --prof --no-logfile-per-isolate src/main.js && node --prof-process v8.log > v8.log.processed.txt && $EDITOR v8.log.processed.txt",
 		"test": "node src/tests.js"
 	}

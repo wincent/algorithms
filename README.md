@@ -11,3 +11,6 @@ Supporting material for the Princeton Algorithms course ([part 1](https://www.co
 -   **Week 3: 8-puzzle**
     -   Starter files (JS, TS): [`8-puzzle`](https://github.com/wincent/algorithms/tree/8-puzzle)
     -   Example solution (TS): [`8-puzzle-solution`](https://github.com/wincent/algorithms/tree/8-puzzle-solution)
+-   **Week 4: Kd-Trees**
+    -   Starter files (JS, TS): [`kd-trees`](https://github.com/wincent/algorithms/tree/kd-trees)
+    -   Example solution (TS): [`kd-trees-solution`](https://github.com/wincent/algorithms/tree/kd-trees-solution)

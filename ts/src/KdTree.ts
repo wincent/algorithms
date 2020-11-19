@@ -149,7 +149,7 @@ export default class KdTree implements IPointSet {
 		const queue = new Queue<Point2D>();
 
 		if (!this.isEmpty()) {
-			this._range(this._root, 0, queue, rect);
+			this._range(this._root, queue, rect);
 		}
 
 		return queue;
@@ -307,7 +307,6 @@ export default class KdTree implements IPointSet {
 	 */
 	_range(
 		node: Node<Point2D, RectHV> | null,
-		level: number,
 		queue: Queue<Point2D>,
 		query: RectHV
 	) {
@@ -322,11 +321,11 @@ export default class KdTree implements IPointSet {
 		}
 
 		if (node.left?.value.intersects(query)) {
-			this._range(node.left, level + 1, queue, query);
+			this._range(node.left, queue, query);
 		}
 
 		if (node.right?.value.intersects(query)) {
-			this._range(node.right, level + 1, queue, query);
+			this._range(node.right, queue, query);
 		}
 	}
 }

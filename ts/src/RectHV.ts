@@ -23,29 +23,22 @@ export default class RectHV {
 	}
 
 	distanceSquaredTo(p: Point2D): number {
+		let xDistance = 0;
+		let yDistance = 0;
+
 		if (p.x < this._xmin) {
-			if (p.y < this._ymin) {
-				return p.distanceSquaredTo(new Point2D(this._xmin, this._ymin));
-			} else if (p.y > this._ymax) {
-				return p.distanceSquaredTo(new Point2D(this._xmin, this._ymax));
-			} else {
-				return (this._xmin - p.x) ** 2;
-			}
+			xDistance = this._xmin - p.x;
 		} else if (p.x > this._xmax) {
-			if (p.y < this._ymin) {
-				return p.distanceSquaredTo(new Point2D(this._xmax, this._ymin));
-			} else if (p.y > this._ymax) {
-				return p.distanceSquaredTo(new Point2D(this._xmax, this._ymax));
-			} else {
-				return (p.x - this._xmax) ** 2;
-			}
-		} else if (p.y < this._ymin) {
-			return (this._ymin - p.y) ** 2;
-		} else if (p.y > this._ymax) {
-			return (p.y - this._ymax) ** 2;
-		} else {
-			return 0;
+			xDistance = p.x - this._xmax;
 		}
+
+		if (p.y < this._ymin) {
+			yDistance = this._ymin - p.y;
+		} else if (p.y > this._ymax) {
+			yDistance = p.y - this._ymax;
+		}
+
+		return xDistance ** 2 + yDistance ** 2;
 	}
 
 	distanceTo(p: Point2D): number {

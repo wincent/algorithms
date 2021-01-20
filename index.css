@@ -1,0 +1,44 @@
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+#controls {
+  display: flex;
+  position: sticky;
+  top: 8px;
+}
+
+#drop-text {
+  color: #888;
+  font-size: 1.5em;
+  position: absolute;
+  text-align: center;
+	top: 45%;
+	width: 100%;
+}
+
+#image-wrapper {
+  background-color: #333;
+  margin: 16px;
+  padding: 16px;
+  position: relative;
+  width: fit-content;
+}
+
+.dropzone {
+  background-color: #888 !important;
+}
+
+.dropzone > :first-child {
+  opacity: .25;
+}
+
+.control-group {
+  background-color: rgba(0, 0, 0, .75);
+  border: 1px solid #444;
+  border-radius: 4px;
+  display: flex;
+  padding: 8px;
+}

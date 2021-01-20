@@ -1,0 +1,15 @@
+{
+	"author": "Greg Hurrell <greg.hurrell@liferay.com>",
+	"devDependencies": {
+		"prettier": "2.2.1"
+	},
+	"license": "MIT",
+	"main": "index.js",
+	"name": "seam",
+	"private": true,
+	"repository": "git@github.com:wincent/algorithms.git",
+	"scripts": {
+		"format": "prettier --write \"**/.*.{js,json}\" \"**/*.{js,json}\""
+	},
+	"version": "1.0.0"
+}

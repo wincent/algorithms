@@ -1,0 +1,11 @@
+# See: https://editorconfig.org/
+
+root = true
+
+[**.{css,html,js,json}]
+indent_size = 4
+indent_style = tab
+
+[**.{md}]
+indent_size = 4
+indent_style = space

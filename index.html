@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Seam</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" href="index.css" />
+	</head>
+	<body>
+		<div id="controls">
+			<div class="control-group">
+				<input id="image-input" type="file" />
+			</div>
+			<div class="control-group">
+				<button disabled id="zoom-out">-</button>
+				<button disabled id="zoom-in">+</button>
+				<button disabled id="zoom-reset">Reset</button>
+			</div>
+			<div class="control-group">
+				<button disabled id="show-energy">Energy</button>
+				<button disabled id="show-seam">Show Seam</button>
+				<button disabled id="remove-seam">Remove Seam</button>
+				<input id="debug" type="checkbox" />
+				<label for="debug">🐛</label>
+			</div>
+		</div>
+		<div id="image-wrapper">
+			<div id="drop-text">Drop an image</div>
+			<canvas height="400" id="image-canvas" width="400"></canvas>
+		</div>
+		<script src="SeamCarver.js"></script>
+		<script src="index.js"></script>
+	</body>
+</html>

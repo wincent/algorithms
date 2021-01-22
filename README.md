@@ -14,3 +14,8 @@ Supporting material for the Princeton Algorithms course ([part 1](https://www.co
 -   **Week 4: Kd-Trees**
     -   Starter files (JS, TS): [`kd-trees`](https://github.com/wincent/algorithms/tree/kd-trees)
     -   Example solution (TS): [`kd-trees-solution`](https://github.com/wincent/algorithms/tree/kd-trees-solution)
+-   **Week 7: Seam-carving**
+    -   Starter files (JS): [`seam`](https://github.com/wincent/algorithms/tree/seam)
+    -   Example solution (JS): [`seam-solution`](https://github.com/wincent/algorithms/tree/seam-solution)
+
+**Note:** There are no files for week 5 because that was a revision week, and none for week 6 because I was out that week.

@@ -1,0 +1,16 @@
+{
+	"author": "Greg Hurrell <greg.hurrell@liferay.com>",
+	"license": "MIT",
+	"name": "burrows-wheeler",
+	"private": true,
+	"repository": "git@github.com:wincent/algorithms.git",
+	"scripts": {
+		"build": "tsc",
+		"format": "prettier --write \"**/*.{js,json,md,ts}\""
+	},
+	"version": "1.0.0",
+	"devDependencies": {
+		"prettier": "2.2.1",
+		"typescript": "4.1.3"
+	}
+}

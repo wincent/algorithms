@@ -6,11 +6,19 @@
 	"repository": "git@github.com:wincent/algorithms.git",
 	"scripts": {
 		"build": "tsc",
-		"format": "prettier --write \"**/*.{js,json,md,ts}\""
+		"clean": "find src -name '*.js' -delete",
+		"format": "prettier --write \"**/*.{js,json,md,ts}\"",
+		"test": "jest"
 	},
 	"version": "1.0.0",
 	"devDependencies": {
+		"@types/jest": "26.0.20",
+		"@types/node": "14.14.22",
+		"jest": "26.6.3",
 		"prettier": "2.2.1",
 		"typescript": "4.1.3"
+	},
+	"dependencies": {
+		"ts-jest": "26.5.0"
 	}
 }

@@ -15,10 +15,14 @@ export default class CircularSuffixArray {
 	 * > methods length() and index() must take constant time in the worst
 	 * > case.
 	 *
-	 * Note the use of LSD radix sort here fails to meet that requirement. I
-	 * chose it because it was easy to implement, but MSD radix sort probably
-	 * would have been better, and 3-way radix quicksort would likely have been
-	 * better still.
+	 * Originally we used LSD radix sort here even though it fails
+	 * to meet that requirement. I chose it because it was easy to
+	 * implement, but MSD radix sort probably would have been better,
+	 * and 3-way radix quicksort would be better still; except for very
+	 * large inputs, where a stack overflow may ocurr during recursion
+	 * because most JS engines don't implement tail call optimization:
+	 *
+	 * https://2ality.com/2015/06/tail-call-optimization.html
 	 */
 	constructor(input: Uint8Array | string, length = input.length) {
 		if (typeof input === 'string') {
@@ -35,43 +39,53 @@ export default class CircularSuffixArray {
 
 		this.#length = length;
 
-		// Use LSD radix sort to sort the suffixes, but instead of
+		// Use 3-way radix quicksort to sort the suffixes, but instead of
 		// actually materializing the circular suffixes we use a `key()`
 		// helper function to lookup which characters would exist at
 		// each index.
 
 		const suffixes: Array<number> = [...Array(length).keys()];
-		const counts = Array(RADIX);
 
 		// Returns the byte value at position `i` within suffix number `j`.
 		function key(i: number, j: number) {
+			if (i >= suffixes.length) {
+				return -1;
+			}
 			return source[(i + suffixes[j]) % length];
 		}
 
-		for (let i = length - 1; i >= 0; i--) {
-			counts.fill(0);
-
-			for (let j = 0; j < length; j++) {
-				counts[key(i, j)]++;
-			}
-
-			let total = 0;
-
-			for (let j = 0; j < RADIX; j++) {
-				[counts[j], total] = [total, counts[j] + total];
-			}
-
-			const output = Array(length);
-
-			for (let j = 0; j < length; j++) {
-				output[counts[key(i, j)]] = suffixes[j];
-				counts[key(i, j)] += 1;
-			}
-
-			for (let j = 0; j < length; j++) {
-				suffixes[j] = output[j];
-			}
+		function exchange(a: number, b: number) {
+			const tmp = suffixes[a];
+			suffixes[a] = suffixes[b];
+			suffixes[b] = tmp;
 		}
+
+		function sort(low: number, high: number, d: number) {
+			if (high <= low) {
+				return;
+			}
+			let less = low;
+			let greater = high;
+			const v = key(d, low);
+			let i = low + 1;
+			while (i <= greater) {
+				const t = key(d, i);
+				if (t < v) {
+					exchange(less++, i++);
+				} else if (t > v) {
+					exchange(i, greater--);
+				} else {
+					i++;
+				}
+			}
+			sort(low, less - 1, d);
+			if (v >= 0) {
+				sort(less, greater, d + 1);
+			}
+			sort(greater + 1, high, d);
+		}
+
+		sort(0, suffixes.length - 1, 0);
 
 		this.#indices = suffixes;
 	}

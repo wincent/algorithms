@@ -17,5 +17,8 @@ Supporting material for the Princeton Algorithms course ([part 1](https://www.co
 -   **Week 7: Seam-carving**
     -   Starter files (JS): [`seam`](https://github.com/wincent/algorithms/tree/seam)
     -   Example solution (JS): [`seam-solution`](https://github.com/wincent/algorithms/tree/seam-solution)
+-   **Week 9: Burrows-Wheeler**
+    -   Starter files (JS): [`seam`](https://github.com/wincent/algorithms/tree/burrows-wheeler)
+    -   Example solution (JS): [`seam-solution`](https://github.com/wincent/algorithms/tree/burrows-wheeler-solution)
 
-**Note:** There are no files for week 5 because that was a revision week, and none for week 6 because I was out that week.
+**Note:** There are no files for week 5 because that was a revision week, none for week 6 because I was out that week, and none for week 8 because I didn't have time to do the exercise that time.

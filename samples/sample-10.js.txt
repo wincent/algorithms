@@ -1,0 +1,27 @@
+{
+    "heading": "How many loops are there in this component?",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ]
+}
+---
+const AppsPanel = ({
+    categories = [],
+}) {
+    let index = categories.findIndex((category) =>
+        category.childCategories.some((childCategory) =>
+            childCategory.panelApps.some(
+                (panelApp) => panelApp.portletId === selectedPortletId
+            )
+        )
+    );
+
+    return (
+        <div className="applications-menu-wrapper">
+            {/* etc */}
+        </div>
+    );
+}

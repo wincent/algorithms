@@ -1,0 +1,19 @@
+{
+    "heading": "What's the total cost of <code>splice()</code> calls?",
+    "options": [
+      "O(1)",
+      "O(n)",
+      "O(2n)",
+      "O(n^2)"
+    ]
+}
+---
+function moveField(parentField, oldIndex, newIndex) {
+    var instance = this;
+
+    var fields = parentField.get('fields');
+
+    fields.splice(newIndex, 0, fields.splice(oldIndex, 1)[0]);
+
+    instance.recreateEditors(fields[newIndex]);
+}

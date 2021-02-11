@@ -1,0 +1,40 @@
+{
+    "heading": "What's asymptotic growth of the <code>useMemo</code> callback here?",
+    "options": [
+      "< O(vc)",
+      "O(vc)",
+      "> O(vc)",
+      "Need more information"
+    ]
+}
+---
+export default function AuditBarChart({vocabularies}) {
+    const auditBarChartData = useMemo(() => {
+        const dataKeys = new Set();
+
+        const bars = vocabularies.reduce((acc, category) => {
+            if (!category.categories) {
+                return acc;
+            }
+
+            const newBar = category.categories.reduce(
+                (childAcc, {key: dataKey, name}) => {
+                    if (dataKeys.has(dataKey)) {
+                        return childAcc;
+                    }
+
+                    dataKeys.add(dataKey);
+
+                    return childAcc.concat({dataKey, name});
+                },
+                []
+            );
+
+            return acc.concat(newBar);
+        }, []);
+
+        // etc
+    }
+
+    // etc
+}

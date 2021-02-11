@@ -1,0 +1,15 @@
+{
+    "heading": "What's does the spread syntax (...) do here?",
+    "options": [
+      "Inserts \"varargs\"",
+      "Copies properties",
+      "Syntax error",
+      "Summons Cthulu"
+    ]
+}
+---
+setState((prevState) => ({
+    ...prevState,
+    isLoading: false,
+    permissions,
+}));

@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useRef, useState } from "react";
+
+import AdminPane from "./AdminPane";
+import VotingPane from "./VotingPane";
+
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const secret = new URLSearchParams(window.location.search).get("secret");
+
+  const sequence = useRef(-1);
+
+  const [state, setState] = useState({
+    show: null,
+    status: "inactive",
+    questions: [],
+  });
+
+  useEffect(() => {
+    const handle = setInterval(() => {
+      fetch(`/poll?sequence=${sequence.current}`)
+        .then((response) => response.json())
+        .then((json) => {
+          if (json.sequence > sequence.current) {
+            sequence.current = json.sequence;
+            setState({
+              show: json.show,
+              status: json.status,
+              questions: json.questions,
+            });
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }, 1000);
+
+    return () => clearInterval(handle);
+  }, []);
+
+  // Note: Plz dont h4xx0r me!
+
+  if (secret === "hunter2") {
+    return <AdminPane state={state} />;
+  } else {
+    return <VotingPane state={state} />;
+  }
 }
 
 export default App;

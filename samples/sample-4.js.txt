@@ -1,0 +1,20 @@
+{
+    "heading": "What's the cost of searching in an array?",
+    "options": [
+      "O(1)",
+      "O(n)",
+      "O(n log n)",
+      "O(n^2)"
+    ]
+}
+---
+const users = [
+    {id: 'ad1bf863', name: 'Jane', role: 'admin'},
+    {id: '6cf662a1', name: 'John', role: 'admin'},
+    {id: '371cc472', name: 'Mary', role: 'moderator'},
+    // ...
+];
+
+function getUser(uuid) {
+    return users.find(({id}) => id === uuid);
+}

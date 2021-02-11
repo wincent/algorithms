@@ -1,0 +1,57 @@
+{
+    "heading": "Which data structure would bring better performance to this code?",
+    "options": [
+      "Arrays",
+      "Sets, Maps, or objects",
+      "BST",
+      "Directed Acyclic Graph"
+    ]
+}
+---
+const getUnique = (arr, compKey) => {
+    return arr
+        .map(e => e[compKey])
+        .map((e, i, final) => final.indexOf(e) === i && i)
+        .filter(e => arr[e])
+        .map(e => arr[e]);
+};
+
+const handleItemsChange = items => {
+    const addedItems = getUnique(
+        items.filter(
+            item =>
+                !selectedItems.find(
+                    selectedItem => selectedItem.value === item.value
+                )
+        ),
+        'label'
+    );
+
+    const invalidAddedItems = [];
+
+    const validAddedItems = [];
+
+    addedItems.map(item => {
+        if (
+            resource.find(
+                sourceItem => sourceItem.titleCurrentValue === item.label
+            )
+        ) {
+            validAddedItems.push(item);
+        } else {
+            invalidAddedItems.push(item);
+        }
+    });
+
+    const removedItems = selectedItems.filter(
+        selectedItem =>
+            !items.find(item => item.value === selectedItem.value)
+    );
+
+    const current = [...selectedItems, ...validAddedItems].filter(
+        item =>
+            !removedItems.find(
+                removedItem => removedItem.value === item.value
+            )
+    );
+};

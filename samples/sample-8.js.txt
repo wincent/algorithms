@@ -1,0 +1,29 @@
+{
+    "heading": "What's the cost of preprocessing this tree?",
+    "options": [
+      "O(1)",
+      "O(h) [h = height]",
+      "O(n) [n = nodes]",
+      "O(nh)"
+    ]
+}
+---
+/**
+ * Adds parent, sibling and child links to make tree traversal in any
+ * direction easy.
+ */
+function addLinks(nodes, parentId = null) {
+    return nodes.map((node, i) => {
+        const [previous, next] = [nodes[i - 1], nodes[i + 1]];
+
+        const children = node.children ? addLinks(node.children, node.id) : [];
+
+        return {
+            ...node,
+            children,
+            nextSiblingId: next != null ? next.id : null,
+            parentId,
+            previousSiblingId: previous != null ? previous.id : null,
+        };
+    });
+}

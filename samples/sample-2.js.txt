@@ -1,0 +1,20 @@
+{
+    "heading": "What's the cost of inserting a value into an object?",
+    "options": [
+      "O(1)",
+      "O(n)",
+      "O(n log n)",
+      "O(n^2)"
+    ]
+}
+---
+const userData = {
+    'ad1bf863': {name: 'Jane', role: 'admin'},
+    '6cf662a1': {name: 'John', role: 'admin'},
+    '371cc472': {name: 'Mary', role: 'moderator'},
+    // ...
+};
+
+function setUser(uuid, data) {
+    userData[uuid] = data;
+}

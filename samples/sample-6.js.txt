@@ -1,0 +1,20 @@
+{
+    "heading": "What's the cost of shifting off an array?",
+    "options": [
+      "O(1)",
+      "O(n)",
+      "O(n log n)",
+      "O(n^2)"
+    ]
+}
+---
+const queue = [
+    'Take out trash',
+    'Buy eggs',
+    'Do yoga',
+    // ...
+];
+
+function dequeueTask(description) {
+    return queue.shift();
+}

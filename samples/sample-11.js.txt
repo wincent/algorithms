@@ -1,0 +1,13 @@
+{
+    "heading": "How many operations does this code do?",
+    "options": [
+      "n",
+      "2",
+      "2n",
+      "Question is ambiguous"
+    ]
+}
+---
+const order = items
+    .filter((item) => item.parentSiteNavigationMenuItemId === parentId)
+    .findIndex((item) => item.siteNavigationMenuItemId === itemId);

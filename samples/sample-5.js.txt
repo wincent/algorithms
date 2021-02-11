@@ -1,0 +1,20 @@
+{
+    "heading": "What's the cost of appending to an array?",
+    "options": [
+      "O(1)",
+      "O(n)",
+      "O(n log n)",
+      "O(n^2)"
+    ]
+}
+---
+const queue = [
+    'Take out trash',
+    'Buy eggs',
+    'Do yoga',
+    // ...
+];
+
+function enqueueTask(description) {
+    queue.push(description);
+}

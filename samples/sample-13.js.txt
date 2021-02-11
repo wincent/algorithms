@@ -1,0 +1,25 @@
+{
+    "heading": "What's the worst case runtime here?",
+    "options": [
+      "O(1)",
+      "O(n)",
+      "O(n^2)",
+      "O(2^n)"
+    ]
+}
+---
+const handleSubmit = event => {
+    event.preventDefault();
+
+    const addedLabels = !append
+        ? selectedItems
+        : selectedItems.filter(
+                item => initialSelectedItems.indexOf(item) === -1
+          );
+
+    const removedLabels = initialSelectedItems.filter(
+        item => selectedItems.indexOf(item) === -1
+    );
+
+    // ...
+};

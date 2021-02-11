@@ -1,0 +1,13 @@
+{
+    "heading": "How would you describe the runtime cost here?",
+    "options": [
+      "O(n) [n = items]",
+      "O(m) [m = children]",
+      "O(n^2)",
+      "O(nm)"
+    ]
+}
+---
+const parentItem = Object.values(items).find(item =>
+    item.children.includes(itemId)
+);
